@@ -1,10 +1,17 @@
 doctype html
 html
   head
+    link(rel="preconnect" href="https://fonts.googleapis.com")
+    link(rel="preconnect" href="https://fonts.gstatic.com" crossorigin)
+    link(href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet")
     title= title
     style.
-      body{
-        margin: 0px;
+      body, html{
+        font-family: "Roboto Mono", monospace;
+        font-optical-sizing: auto;
+        font-weight: <weight>;
+        font-style: normal;
+        margin: 0;
         height: 100%;
         width: 100%;
         background-color: #FFFBFF;
@@ -12,40 +19,115 @@ html
       #posts{
         width: 100%;
         height: 100%;
-        background-color: #f1dabf;
-        border-radius: 4px;
+        border: 1px solid #fffbff;
+        max-width: 500px;
+        border-radius: 10px;
+        display: grid;
+        color: #fffbff;
       }
       #postBody{
         display: grid;
+        margin-left: 20px;
+        margin-right: 20px;
         gap: 10px;
-        width: 100%;
-        min-width: 200px;
-        min-height: 100px;
         height: 100%;
         justify-content: center;
-        align-content: space-evenly;
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        align-content: start;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        background-color: #282a2e;
+        border-radius: 20px;
+        padding: 20px;
+      }
+      #form{
+        grid-auto-flow: column;
+
+      }
+      #formPage{
+        z-index: 2;
+        height: 98vh;
+        width: 98vw;
+        position: absolute;
+        top:0%;
+        left:0%;
+        display: none;
+        align-items: center;
+        justify-items: center;
+        backdrop-filter: blur(10px);
+      }
+      #message{
+        height: 100px;
+        overflow: ;
+
+      }
+      #addButton{
+        background: none;
+        border: 1px solid black;
+        border-radius: 100%;
+        height: 50px;
+        width: 50px;
+        justify-self: center;
+        font-size: 1em;
+      }
+      #addButton:hover{
+        background-color: #eee5e5;
+      }
+      #footer{
+        display: grid;
+        align-items: center;
+        justify-items: center;
+        grid-auto-flow: column;
+        height: 40px;
+
+      }
+      #footerlink{
+        text-decoration: none;
+        color: inherit;
+        text-shadow: 1px 1px #eee5e5;
         
       }
+      #header{
+        height: 80px;
+        width: 100%;
+        font-size: 2em;
+        font-weight: bold;
+        display: grid;
+        grid-auto-flow: column;
+        grid-template-columns: .1fr 8fr .7fr;
+        align-items: center;
+      }
   body
-    h1= message
+    div#header 
+      div 
+      div Mini-MessageBoard
+      button#addButton(onclick="toggleFormPage()") +
     div#postBody
       each item in items
         div#posts
           each value, key in item
-            div #{key}: #{value}
-
-
-
-
-  form(action="/new", method="GET")
-      label(for="title") Title:
-      input(type="text", id="title", name="title")
-      br
-      label(for="user") User:
-      input(type="user", id="user", name="user")
-      br
-      label(for="message") Message:
-      input(type="message", id="message", name="message")
-      br
-      button(type="submit") Submit
+            div #{key.charAt(0).toUpperCase() + key.slice(1)}: #{value.charAt(0).toUpperCase() + value.slice(1)}
+    div#formPage(onclick="toggleFormPage()")
+      div#form
+        form(action="/new", method="GET")
+          label(for="title") Title:
+          input(type="text", id="title", name="title")
+          br
+          label(for="user") User:
+          input(type="user", id="user", name="user")
+          br
+          label(for="message") Message:
+          input(type="text", id="message", name="message")
+          br
+          button(type="submit" onclick="toggleFormPage()") Add Message! 
+  div#footer 
+    div 2024 © 
+      a#footerlink(href="https://github.com/Chuan-Chen") Chuan Chen
+  script.
+      function toggleFormPage() {
+        console.log('clicked')
+        var formPage = document.getElementById('formPage');
+        if (formPage.style.display === 'grid') {
+          formPage.style.display = 'none';
+        } else {
+          formPage.style.display = 'grid';
+        }
+      }

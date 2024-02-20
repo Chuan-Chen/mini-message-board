@@ -21,7 +21,7 @@ exports.newPost = async (req, res) => {
 exports.getPost = async (req, res) => {
     try{
         const postdata = await posts.get();
-        console.log(postdata.data)
+        //console.log(postdata.data)
         res.render('index', {title: 'Mini-Messageboard', message: 'Posts', items: postdata.data, NumberOfPosts: postdata.data.length});
         
     }catch(err){
