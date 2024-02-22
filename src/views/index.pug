@@ -39,20 +39,24 @@ html
         padding: 20px;
       }
       #form{
-        grid-auto-flow: column;
-
+        z-index: 2;
+        background-color: white;
+        padding: 40px;
+        border-radius: 10px;
+        display: grid;
       }
       #formPage{
         z-index: 2;
-        height: 98vh;
-        width: 98vw;
+        height: 100%;
+        width: 100%;
         position: absolute;
         top:0%;
         left:0%;
         display: none;
         align-items: center;
         justify-items: center;
-        backdrop-filter: blur(10px);
+        backdrop-filter: blur(5px);
+        
       }
       #message{
         height: 100px;
@@ -67,6 +71,20 @@ html
         width: 50px;
         justify-self: center;
         font-size: 1em;
+        cursor: pointer;
+      }
+      #cancelButton{
+        position: relative;
+        background: none;
+        border: 1px solid black;
+        border-radius: 100%;
+        height: 30px;
+        width: 30px;
+        justify-self: end;
+        font-size: .8em;
+        top: -18px;
+        right: -18px;
+        cursor: pointer;
       }
       #addButton:hover{
         background-color: #eee5e5;
@@ -95,6 +113,19 @@ html
         grid-template-columns: .1fr 8fr .7fr;
         align-items: center;
       }
+      #innerform{
+        display: grid;
+
+      }
+      #addMsgButton{
+        background: none;
+        border: 1px solid black;
+        cursor: pointer;
+        font-size: 1em;
+        font-weight:: bold;
+        height: 40px;
+        border-radius: 10px;
+      }
   body
     div#header 
       div 
@@ -105,9 +136,10 @@ html
         div#posts
           each value, key in item
             div #{key.charAt(0).toUpperCase() + key.slice(1)}: #{value.charAt(0).toUpperCase() + value.slice(1)}
-    div#formPage(onclick="toggleFormPage()")
+    div#formPage
       div#form
-        form(action="/new", method="GET")
+        button(onclick="toggleFormPage()")#cancelButton X
+        form(action="/new", method="GET")#innerform
           label(for="title") Title:
           input(type="text", id="title", name="title")
           br
@@ -117,11 +149,13 @@ html
           label(for="message") Message:
           input(type="text", id="message", name="message")
           br
-          button(type="submit" onclick="toggleFormPage()") Add Message! 
+          button(type="submit" onclick="toggleFormPage()")#addMsgButton Add Message! 
   div#footer 
     div 2024 © 
       a#footerlink(href="https://github.com/Chuan-Chen") Chuan Chen
   script.
+      let siteData = [];
+
       function toggleFormPage() {
         console.log('clicked')
         var formPage = document.getElementById('formPage');
@@ -130,4 +164,26 @@ html
         } else {
           formPage.style.display = 'grid';
         }
+      }
+      //check data overlap 
+      const eventsDiv = document.getElementById('postBody');
+      const eventSource = new EventSource('/stream');
+
+      eventSource.onmessage = function(event) {
+        const newEvent = document.createElement('div');
+        let data = JSON.parse(event.data).data;
+        //console.log(siteData.filter(n=>!data.includes(n)));
+        console.log(data);
+        data.forEach((e) => {
+          const temp = document.createElement('div');
+          temp.setAttribute('id', 'posts')
+          for(const key in e){
+            const attr = document.createElement('div');
+            attr.textContent = key + ": " + e[key];
+            temp.appendChild(attr);
+          }
+          eventsDiv.appendChild(temp);
+        })
+
+        eventsDiv.appendChild(newEvent);
       }
