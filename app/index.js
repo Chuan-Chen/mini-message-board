@@ -16,6 +16,7 @@ app.set('views', './src/views');
 
 app.use('/', postRoute);
 
+/*
 app.get('/stream', async (req, res) => {
     console.log("data requested.")
     res.setHeader('Content-Type', 'text/event-stream');
@@ -28,6 +29,7 @@ app.get('/stream', async (req, res) => {
         res.end();
     })
 })
+*/
 
 
 /*
