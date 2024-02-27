@@ -135,8 +135,8 @@ html
       each item in items
         div#posts
           each value, key in item
-            div #{key}: #{value}
-            //.charAt(0).toUpperCase() + key.slice(1) // .charAt(0).toUpperCase() + value.slice(1)
+            div #{key.charAt(0).toUpperCase() + key.slice(1)}: #{value.charAt(0).toUpperCase() + value.slice(1)}
+            
     div#formPage
       div#form
         button(onclick="toggleFormPage()")#cancelButton X
