@@ -135,7 +135,8 @@ html
       each item in items
         div#posts
           each value, key in item
-            div #{key.charAt(0).toUpperCase() + key.slice(1)}: #{value.charAt(0).toUpperCase() + value.slice(1)}
+            div #{key}: #{value}
+            //.charAt(0).toUpperCase() + key.slice(1) // .charAt(0).toUpperCase() + value.slice(1)
     div#formPage
       div#form
         button(onclick="toggleFormPage()")#cancelButton X
@@ -166,14 +167,36 @@ html
         }
       }
       //check data overlap 
-      const eventsDiv = document.getElementById('postBody');
+      /**
+         const eventsDiv = document.getElementById('postBody');
       const eventSource = new EventSource('/stream');
 
       eventSource.onmessage = function(event) {
+        console.log('onmessage');
         const newEvent = document.createElement('div');
         let data = JSON.parse(event.data).data;
+        let eventData = JSON.parse(event.data);
+        let lastData = data[data.length - 1];
         //console.log(siteData.filter(n=>!data.includes(n)));
-        console.log(data);
+        //console.log(eventData);
+        console.log(data[data.length - 1]);
+        
+    
+        const temp = document.createElement('div');
+        temp.setAttribute('id', 'posts')
+        for(const key in lastData){
+          const attr = document.createElement('div');
+          attr.textContent = key + ": " + lastData[key];
+          temp.appendChild(attr);
+        }
+        if(lastData){
+          eventsDiv.appendChild(temp);
+        }
+      */
+     
+        
+        
+        /*
         data.forEach((e) => {
           const temp = document.createElement('div');
           temp.setAttribute('id', 'posts')
@@ -184,6 +207,7 @@ html
           }
           eventsDiv.appendChild(temp);
         })
+        */
 
-        eventsDiv.appendChild(newEvent);
+        
       }
