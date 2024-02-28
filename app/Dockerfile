@@ -5,7 +5,9 @@ FROM node:14
 WORKDIR /usr/src/app
 
 # Clone the required Git repository
-RUN git clone <repository_url> .
+RUN git clone https://github.com/Chuan-Chen/mini-message-board.git .
+
+WORKDIR /usr/src/app/app
 
 # Install dependencies
 RUN npm install
@@ -14,4 +16,4 @@ RUN npm install
 EXPOSE 3000
 
 # Command to run the application
-CMD ["node", "app.js"]
+CMD ["node", "index.js"]
