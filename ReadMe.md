@@ -1,5 +1,8 @@
 # Mini Message-Board
-The Mini Message Board is a simple web application that allows users to post messages and view messages posted by others. It provides a minimalistic interface for communication between users, making it easy to share thoughts, ideas, or announcements within a small community.
+The Mini Message Board is a simple web application that allows users to post messages and view messages posted by others. It provides a minimalistic interface for communication between users, making it easy to share thoughts, ideas, or announcements within a small community. 
+
+Visit live demo @ <a href = "https://message-board.nauhc.dev/"> mini-messageboard </a>
+currently hosted on a home server using Cloudflare.
 
 ## Table of Contents
 
